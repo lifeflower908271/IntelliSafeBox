@@ -1,0 +1,43 @@
+﻿<Window x:Class="SafeBox.Pages.WelcomeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:attach="clr-namespace:Utilities.AttachProp" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:SafeBox.Pages" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:s="https://github.com/canton7/Stylet"
+        Title="Launch"
+        Width="auto" Height="auto"
+        d:DataContext="{d:DesignInstance local:WelcomeViewModel}"
+        Background="White" SizeToContent="WidthAndHeight"
+        mc:Ignorable="d">
+    <Border>
+        <Grid>
+            <Image Height="600" Source="/Image/bg_launch.png" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0"
+                       VerticalAlignment="Center"
+                       Width="140"
+                       Source="/Image/icon_home_safe.png" />
+
+                <Image Grid.Row="1"
+                       VerticalAlignment="Center"
+                       Width="100"
+                       Cursor="Hand"
+                       MouseUp="{s:Action Launch}"
+                       Source="/Image/btn_open.png" />
+
+
+
+                <Image Grid.Row="2"
+                       VerticalAlignment="Center"
+                       Width="100"
+                       Source="/Image/logo_newlandedu.png" />
+            </Grid>
+
+
+        </Grid>
+    </Border>
+</Window>

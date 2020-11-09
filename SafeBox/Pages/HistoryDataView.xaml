@@ -1,0 +1,36 @@
+﻿<Window x:Class="SafeBox.Pages.HistoryDataView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0" xmlns:local="clr-namespace:SafeBox.Pages"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="https://github.com/canton7/Stylet"
+        xmlns:wpf="clr-namespace:Component.Converter"
+        Title="查询传感数据"
+        Width="337.5" Height="600"
+        d:DataContext="{d:DesignInstance local:HistoryDataViewModel}"
+        Background="CadetBlue" TextElement.FontFamily="Georgia" TextElement.FontSize="16"
+        mc:Ignorable="d">
+    <Window.Resources>
+        <wpf:SensorAlarmConverter x:Key="conv" />
+    </Window.Resources>
+    <Grid>
+        <Border>
+            <ListView ItemsSource="{Binding SensorDatas}" SnapsToDevicePixels="True">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Width="auto"
+                                            DisplayMemberBinding="{Binding Path=Value, Converter={StaticResource conv}}"
+                                            Header="报警信息" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=RecordTime}" Header="上报时间" />
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+        </Border>
+    </Grid>
+</Window>

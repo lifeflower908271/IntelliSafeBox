@@ -1,0 +1,60 @@
+﻿<Application x:Class="SafeBox.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SafeBox" xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:wpf="clr-namespace:Component.Converter">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <s:ApplicationLoader>
+                    <s:ApplicationLoader.Bootstrapper>
+                        <local:Bootstrapper />
+                    </s:ApplicationLoader.Bootstrapper>
+                </s:ApplicationLoader>
+
+            </ResourceDictionary.MergedDictionaries>
+
+            <wpf:BooleanToPathConverter x:Key="SwitchConv"
+                                        PathForFalse="/Image/btn_switch_right.png" PathForTrue="/Image/btn_switch_left.png" />
+
+            <ControlTemplate x:Key="ToggleButtonSwitchTemplate" TargetType="{x:Type ToggleButton}">
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Cursor="Hand">
+                    <Image Width="{TemplateBinding Width}"
+                           Height="{TemplateBinding Height}"
+                           IsHitTestVisible="True"
+                           Source="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton, Mode=FindAncestor}, Path=IsChecked, Converter={StaticResource SwitchConv}}" />
+                </Border>
+            </ControlTemplate>
+
+            <Style x:Key="ToggleButtonSwitchStyle" TargetType="{x:Type ToggleButton}">
+                <Setter Property="Template" Value="{StaticResource ToggleButtonSwitchTemplate}" />
+                <Setter Property="Background" Value="{x:Null}" />
+                <Setter Property="BorderBrush" Value="{x:Null}" />
+            </Style>
+
+            <wpf:BooleanToPathConverter x:Key="SwitchBoxConv"
+                                        PathForFalse="/Image/icon_safe_lock.png" PathForTrue="/Image/icon_safe.png" />
+
+            <ControlTemplate x:Key="ToggleButtonSwitchBoxTemplate" TargetType="{x:Type ToggleButton}">
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Cursor="Hand">
+                    <Image Width="{TemplateBinding Width}"
+                           Height="{TemplateBinding Height}"
+                           IsHitTestVisible="True"
+                           Source="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton, Mode=FindAncestor}, Path=IsChecked, Converter={StaticResource SwitchBoxConv}}" />
+                </Border>
+            </ControlTemplate>
+
+            <Style x:Key="ToggleButtonSwitchBoxStyle" TargetType="{x:Type ToggleButton}">
+                <Setter Property="Template" Value="{StaticResource ToggleButtonSwitchBoxTemplate}" />
+                <Setter Property="Background" Value="{x:Null}" />
+                <Setter Property="BorderBrush" Value="{x:Null}" />
+            </Style>
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>
