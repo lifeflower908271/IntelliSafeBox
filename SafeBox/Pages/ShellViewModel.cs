@@ -51,6 +51,7 @@ namespace SafeBox.Pages
             _container = container;
 
             nle_api = Store.Get<NLECloudAPI>(UDG_.NLE_API);
+    
         }
 
         protected override void OnViewLoaded()
@@ -83,6 +84,7 @@ namespace SafeBox.Pages
                 lock (_mutex)
                 {
                     var resp = nle_api.Cmds(UDG_.DEVICE_ID, UDG_.APITAG_DEFENSE, val, m_token);
+                    _waitTime = 0;
                     return resp.IsSuccess();
                 }
             });
@@ -100,6 +102,7 @@ namespace SafeBox.Pages
                     lock (_mutex)
                     {
                         var resp = nle_api.Cmds(UDG_.DEVICE_ID, UDG_.APITAG_CONTROL, 1, m_token);
+                        _waitTime = 0;
                         return resp.IsSuccess();
                     }
                 });
@@ -121,7 +124,8 @@ namespace SafeBox.Pages
             _windowManager.ShowWindow(_container.Get<HistoryDataViewModel>());
         }
 
-
+        private int _waitTime = 0;
+        private const int WAIT_TIME_MAX = 60;
         /// <summary>
         /// 更新状态
         /// </summary>
@@ -129,7 +133,8 @@ namespace SafeBox.Pages
         {
             while (isRunning)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
+                _waitTime++;
 
                 #region 直接获取单个传感信息，反应很慢
                 // 获取安防状态，更新视图
@@ -181,6 +186,10 @@ namespace SafeBox.Pages
                 #region 通过获取历史数据来得到第一个数据，反应快
                 lock (_mutex)
                 {
+                    if (_waitTime < WAIT_TIME_MAX)
+                        continue;
+                    _waitTime = 0;
+
                     // 获取报警信号，更新视图
                     {
                         var paras = new SensorDataFuzzyQryPagingParas()
