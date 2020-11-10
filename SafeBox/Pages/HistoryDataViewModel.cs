@@ -113,7 +113,7 @@ namespace SafeBox.Pages
         protected override void OnClose()
         {
             isRunning = false;
-            threadWork.Abort();
+            threadWork?.Abort();
             base.OnClose();
         }
     }
